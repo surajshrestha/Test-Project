@@ -15,7 +15,7 @@ public class MainActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		TabHost tabHost = getTabHost();//change 2		
+		TabHost tabHost = getTabHost();//change 3		
 
 		TabSpec incomeTab = tabHost.newTabSpec("Income");
 		incomeTab.setIndicator("Income", null);
