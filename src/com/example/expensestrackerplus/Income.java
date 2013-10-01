@@ -118,33 +118,8 @@ public class Income extends Activity {
 			System.out.println("success");
 		}
 
-		/*pushchanges();*/
-
 		return result;
 	}
-
-/*	public void pushchanges() {
-		db.open();
-
-		Cursor c = db.getIncome();
-
-		if (c.moveToFirst()) {
-			do {
-
-				id = c.getString(0);
-				incomeList = c.getString(1);
-				incomeAmount = c.getString(3);
-				list_Id.add(id);
-				list_Inc.add(incomeList);
-				list_Amp.add(incomeAmount);
-
-			} while (c.moveToNext());
-		}
-
-		db.close();
-		ci.makechanges(list_Id, list_Amp);
-
-	}*/
 
 	public void retrieve() {
 		db.open();
@@ -174,14 +149,6 @@ public class Income extends Activity {
 					int position, long arg3) {
 				// TODO Auto-generated method stub
 
-				/*
-				 * Toast.makeText(Income.this, list_Id.get(position), 1000)
-				 * .show();
-				 * 
-				 * Toast.makeText(Income.this, list_Inc.get(position), 1000)
-				 * .show();
-				 */
-
 				Intent i = new Intent(Income.this, Description.class);
 
 				Bundle b = new Bundle();
@@ -189,12 +156,22 @@ public class Income extends Activity {
 				b.putString("Income", list_Inc.get(position));
 				i.putExtras(b);
 
-				startActivity(i);
+				startActivityForResult(i, 1);
 
 			}
 
 		});
 
+	}
+
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1) {
+			if (resultCode == RESULT_OK) {
+				String amount = data.getData().toString();
+				Toast.makeText(Income.this, amount, 1000).show();
+
+			}
+		}
 	}
 
 }

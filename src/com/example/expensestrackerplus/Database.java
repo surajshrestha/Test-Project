@@ -29,7 +29,6 @@ public class Database {
 			+ "category_name text not null,category_description text not null,category_amount text not null, category_date text not null, category_time text not null);";
 
 	Context context;
-	
 
 	static DatabaseHelper dbhelper;
 	SQLiteDatabase db;
@@ -101,14 +100,16 @@ public class Database {
 
 	public Cursor getIncome() {
 
-		return db.query(tbl_name, new String[] { id, cat_name, cat_type,
-				cat_amount }, null, null, null, null, null);
+		Cursor query = db.rawQuery("select * from tbl_category", null);
+		return query;
+
 	}
 
-	public Cursor getIncomeDescription() {
+	public Cursor getIncomeDescription(String name) {
 
-		return db.query(tbl_name, new String[] { id, cat_name }, null, null,
-				null, null, null);
+		Cursor query = db.rawQuery(
+				"SELECT SUM(category_amount) FROM tbl_description where category_name='"+name+"'", null);
+		return query;
 	}
 
 }

@@ -8,7 +8,9 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -110,20 +112,24 @@ public class Description extends Activity {
 		btn_view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				db.open();
 
-				Cursor c = db.getIncome();
+				db.open();
+				Toast.makeText(Description.this, income, 1000).show();
+				Cursor c = db.getIncomeDescription(income);
 
 				if (c.moveToFirst()) {
 					do {
 
-						id = c.getString(0);
-						Toast.makeText(Description.this, id, 1000).show();
+						amount = c.getString(0);
 					} while (c.moveToNext());
 				}
-
 				db.close();
-
+				if (amount != null) {
+					Intent data = new Intent();
+					data.setData(Uri.parse(amount));
+					setResult(RESULT_OK, data);
+					finish();
+				}
 			}
 
 		});
@@ -141,7 +147,6 @@ public class Description extends Activity {
 		}
 		return null;
 
-		
 	}
 
 	private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
